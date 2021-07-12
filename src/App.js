@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {ClayIconSpriteContext} from "@clayui/icon"
+import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+
+import {ApiContextProvider} from './context/ApiContext';
+import Frontpage from "./pages/Frontpage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const spritemap = process.env.PUBLIC_URL +'/assets/clay/icons.svg';
+
+    return (
+        <ApiContextProvider>
+            <ClayIconSpriteContext.Provider value={spritemap}>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact>
+                            <Frontpage/>
+                        </Route>
+                        <Route path='/category/:id'>
+                            <Frontpage/>
+                        </Route>
+                    </Switch>
+                </Router>
+            </ClayIconSpriteContext.Provider>
+        </ApiContextProvider>
+    );
 }
 
 export default App;
